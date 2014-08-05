@@ -1,0 +1,16 @@
+<android.support.v4.widget.SwipeRefreshLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/toparticles_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1" >
+
+    <ListView
+        android:id="@+id/list_toparticles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

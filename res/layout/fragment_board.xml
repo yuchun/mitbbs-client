@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical" >
+	
+	<android.support.v4.widget.SwipeRefreshLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/board_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="5" >
+
+        <ListView
+        	android:id="@+id/list_board"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="18dp"
+        	android:layout_marginTop="0dp" >
+    	</ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/board_btn_firstpage"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/first_page" />
+
+        <Button
+            android:id="@+id/board_btn_prepage"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/previous_page" />
+
+        <Button
+            android:id="@+id/board_btn_nextpage"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_page" />
+
+        <Button
+            android:id="@+id/board_btn_lastpage"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/last_page" />
+        
+    </LinearLayout>
+    
+</LinearLayout>
