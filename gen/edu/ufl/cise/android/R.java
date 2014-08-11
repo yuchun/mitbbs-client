@@ -19,6 +19,7 @@ public final class R {
         public static final int board_btn_nextpage=0x7f070007;
         public static final int board_btn_prepage=0x7f070006;
         public static final int board_container=0x7f070003;
+        public static final int board_section_container=0x7f070014;
         public static final int btn_go=0x7f070013;
         public static final int btn_nextpage=0x7f070011;
         public static final int btn_prepage=0x7f070010;
@@ -29,20 +30,21 @@ public final class R {
         public static final int hotboards_container=0x7f070009;
         public static final int hotclubs_container=0x7f07000b;
         public static final int list_board=0x7f070004;
+        public static final int list_boardSections=0x7f070015;
         public static final int list_hotboards=0x7f07000a;
         public static final int list_hotclubs=0x7f07000c;
-        public static final int list_link=0x7f070016;
+        public static final int list_link=0x7f070018;
         public static final int list_post=0x7f07000e;
-        public static final int list_toparticles=0x7f070015;
-        public static final int login=0x7f07001a;
-        public static final int menu_post_refresh=0x7f07001b;
-        public static final int menu_post_return=0x7f07001c;
+        public static final int list_toparticles=0x7f070017;
+        public static final int login=0x7f07001c;
+        public static final int menu_post_refresh=0x7f07001d;
+        public static final int menu_post_return=0x7f07001e;
         public static final int pager=0x7f070001;
         public static final int post_container=0x7f07000d;
-        public static final int post_content=0x7f070018;
-        public static final int post_topic=0x7f070017;
-        public static final int refresh=0x7f070019;
-        public static final int toparticles_container=0x7f070014;
+        public static final int post_content=0x7f07001a;
+        public static final int post_topic=0x7f070019;
+        public static final int refresh=0x7f07001b;
+        public static final int toparticles_container=0x7f070016;
     }
     public static final class layout {
         public static final int activity_board=0x7f030000;

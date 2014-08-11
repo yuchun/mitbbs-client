@@ -97,6 +97,13 @@ public class WebCrawler {
 		Log.i("parsePage", page.getLinks().size() + "");
 		return page;
 	}
+	
+	public TopicList<Link> parseBBSSec(TopicListDataModel model){
+		TopicList<Link> newLinks = new TopicList<Link>(model.getList()
+				.getCurrentPage());
+		
+		return newLinks;
+	}
 
 	public TopicList<Link> parseTopicList(TopicListDataModel model)
 			throws ParserException {
@@ -154,6 +161,8 @@ public class WebCrawler {
 		return newLinks;
 	}
 	
+	
+	
 	public List<GuidanceDataModel.Guidances> parseGuidance(
 			GuidanceDataModel model) throws ParserException {
 		ArrayList<GuidanceDataModel.Guidances> guidances = new ArrayList<GuidanceDataModel.Guidances>();
@@ -166,94 +175,63 @@ public class WebCrawler {
 		htmlParser.setEncoding(encoding);
 		String title = "";
 		String link = "";
+		NodeList all = htmlParser.extractAllNodesThatMatch(new TagNameFilter("body"));
+		NodeList tables = all.extractAllNodesThatMatch(new AndFilter(new TagNameFilter("div"), 
+						new HasAttributeFilter("class", "index_other_news")), true);
 
-		NodeList tables = htmlParser
-				.extractAllNodesThatMatch(new TagNameFilter("table"));
-
-		if (tables != null && tables.size() > 0) {
-			for (int i = 0; i < tables.size() - 1; i++) {
-				Node n = tables.elementAt(i);
-				if (n.getFirstChild() != null
-						&& n.getFirstChild()
-								.toString()
-								.contains(
-										guidances
-												.get(GuidanceDataModel.ENUM_TOPARTICLES)
-												.getName())) {
-					n = tables.elementAt(i + 1);
-					NodeList nl = n.getChildren().extractAllNodesThatMatch(
-							new AndFilter(new TagNameFilter("a"),
-									new HasAttributeFilter("class", "a2")),
-							true);
-					for (int j = 0; j < nl.size(); j++) {
+        if(tables != null && tables.size() > 0) { 
+        	for(int i=0; i<tables.size(); i++){
+        		Node n = tables.elementAt(i);
+    			NodeList nl = n.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("a"),
+    					new HasAttributeFilter("class", "a2")),  true);
+    			for(int j=0; j<nl.size(); j++){
 						title = ((LinkTag) nl.elementAt(j)).getLinkText()
 								.replaceAll("&amp;", "")
 								.replaceAll("&nbsp;", "");
 						link = ((LinkTag) nl.elementAt(j)).getLink();
+						System.out.println(title);
 						guidances.get(GuidanceDataModel.ENUM_TOPARTICLES)
 								.getContents().add(new Link(title, link));
 					}
-				}
+
 			}
 		}
-		System.out.println("***************************");
+        
+        
+		tables = all.extractAllNodesThatMatch(new AndFilter(new TagNameFilter("div"), 
+				new HasAttributeFilter("class", "index_hotspace")), true);
+		
+		for(int i=0; i<tables.size(); i++){
+			Node n = tables.elementAt(i);
+			if(n.toHtml().contains("当前热门版面")){
+				NodeList nl = n.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("div"),
+    					new HasAttributeFilter("class", "index_hotspace_table")),  true);
+				NodeList li = nl.extractAllNodesThatMatch(new TagNameFilter("a"),true);
+				for(int j=0; j<li.size(); j++){
+					title = ((LinkTag) li.elementAt(j)).getLinkText()
+							.replaceAll("&amp;", "")
+							.replaceAll("&nbsp;", "");
+					link = ((LinkTag) li.elementAt(j)).getLink();
+					guidances.get(GuidanceDataModel.ENUM_HOTBOARDS)
+							.getContents().add(new Link(title, link));
 
-		if (tables != null && tables.size() > 0) {
-			for (int i = 0; i < tables.size() - 1; i++) {
-				Node n = tables.elementAt(i);
-				if (n.getFirstChild() != null
-						&& n.getFirstChild()
-								.toString()
-								.contains(
-										guidances
-												.get(GuidanceDataModel.ENUM_HOTBOARDS)
-												.getName())) {
-					n = tables.elementAt(i + 1);
-					NodeList nl = n.getChildren().extractAllNodesThatMatch(
-							new AndFilter(new TagNameFilter("a"),
-									new HasAttributeFilter("class", "news")),
-							true);
-					for (int j = 0; j < nl.size(); j++) {
-						title = ((LinkTag) nl.elementAt(j)).getLinkText()
-								.replaceAll("&amp;", "")
-								.replaceAll("&nbsp;", "");
-						link = ((LinkTag) nl.elementAt(j)).getLink();
-						guidances.get(GuidanceDataModel.ENUM_HOTBOARDS)
-								.getContents().add(new Link(title, link));
-					}
-				}
+    			}
+			}else if(n.toHtml().contains("当前热门俱乐部")){
+				NodeList nl = n.getChildren().extractAllNodesThatMatch(new AndFilter(new TagNameFilter("div"),
+    					new HasAttributeFilter("class", "index_hotspace_table")),  true);
+				NodeList li = nl.extractAllNodesThatMatch(new TagNameFilter("a"),true);
+				for(int j=0; j<li.size(); j++){
+					title = ((LinkTag) li.elementAt(j)).getLinkText()
+							.replaceAll("&amp;", "")
+							.replaceAll("&nbsp;", "");
+					link = ((LinkTag) li.elementAt(j)).getLink();
+					guidances.get(GuidanceDataModel.ENUM_HOTCLUBS)
+							.getContents().add(new Link(title, link));
+System.out.println(title);
+    			}			
 			}
 		}
-
-		System.out.println("***************************");
-
-		if (tables != null && tables.size() > 0) {
-			for (int i = 0; i < tables.size() - 1; i++) {
-				Node n = tables.elementAt(i);
-				if (n.getFirstChild() != null
-						&& n.getFirstChild()
-								.toString()
-								.contains(
-										guidances
-												.get(GuidanceDataModel.ENUM_HOTCLUBS)
-												.getName())) {
-					n = tables.elementAt(i + 1);
-					NodeList nl = n.getChildren().extractAllNodesThatMatch(
-							new AndFilter(new TagNameFilter("a"),
-									new HasAttributeFilter("class", "news")),
-							true);
-					for (int j = 0; j < nl.size(); j++) {
-						title = ((LinkTag) nl.elementAt(j)).getLinkText()
-								.replaceAll("&amp;", "")
-								.replaceAll("&nbsp;", "");
-						link = ((LinkTag) nl.elementAt(j)).getLink();
-						guidances.get(GuidanceDataModel.ENUM_HOTCLUBS)
-								.getContents().add(new Link(title, link));
-
-					}
-				}
-			}
-		}
+   
 		return guidances;
 	}
 
